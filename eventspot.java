@@ -21,10 +21,11 @@ public class eventspot {
         boolean repeat=true;
         userandpass user1=new userandpass();
         do{
-        System.out.println("event spot ");
+        System.out.println("____Event spot____ ");
         System.out.println("1-sign in");
         System.out.println("2-create account");
         System.out.println("3-exit");
+         System.out.println("___________________");
         Scanner keyboard = new Scanner(System.in);
         choice = keyboard.nextInt();
         switch (choice) {
@@ -40,7 +41,6 @@ public class eventspot {
                 } else {
                     System.out.println("your password or user not correct ");
                 
-
                 }
 
                 break;
