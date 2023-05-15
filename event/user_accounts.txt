@@ -1,0 +1,8 @@
+
+user informationname :  2  2
+userName :  2
+ password :  2
+E-mail :  w@
+phoneNumber : 2
+city : 2
+_____________________________
