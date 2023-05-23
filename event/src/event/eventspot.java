@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 package event;
-//hi iam huda 
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import static java.sql.DriverManager.println;
 import java.util.Scanner;
+import org.json.simple.parser.ParseException;
 
 public class eventspot {
 
@@ -16,16 +17,18 @@ public class eventspot {
      * @param args the command line arguments
      *
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, FileNotFoundException, ParseException {
         // TODO code application logic here
         int choice = 0;
         boolean repeat = true;
         boolean validEmail = false;
         boolean validpass = false;
+        String type = null;
+        int choose;
         String firstName, lastName, userName, phoneNumber, Email, password, repass;
 
         userandpass user1 = new userandpass();
-        
+
         do {
             System.out.println("          __Event spot__ ");
             System.out.println("1-sign in");
@@ -44,9 +47,23 @@ public class eventspot {
                     String userName0 = keyboard.nextLine();
                     System.out.println("please enter your password:");
                     String password0 = keyboard.nextLine();
-                    //userandpass user = new userandpass();
-                    if (user1.checkLogin(userName0, password0)) {
-                        System.out.println("correct");
+
+                    if (!user1.checkLogin(userName0, password0)) {
+
+                      /*  System.out.println("choose from menu your event type");
+                        System.out.println("1.study area");
+                        System.out.println("2.wedding");
+                        choose = keyboard.nextInt();
+                        switch (choose) {
+                            case 1:
+                                type = "studyArea";
+
+                                break;
+                            case 2:
+                                type = "wedding";
+                       
+                        }*/
+                       eventPlace1 place=new eventPlace1(); 
                     } else {
                         repeat = false;
                     }
@@ -55,7 +72,6 @@ public class eventspot {
 
                 case 2:
                     keyboard.nextLine();
-// firstName , lastName , userName , phoneNumber , Email , password,repass;
                     Scanner input = new Scanner(System.in);
                     System.out.println("Please enter your personal information:");
 
@@ -64,7 +80,7 @@ public class eventspot {
 
                     System.out.print("Last name: ");
                     lastName = input.nextLine();
-                    System.out.print("Last name: ");
+                    System.out.print("User name: ");
                     userName = input.nextLine();
                     System.out.print("Phone number: ");
                     phoneNumber = input.nextLine();
@@ -111,5 +127,4 @@ public class eventspot {
 
         } while (repeat);
     }
-
 }
