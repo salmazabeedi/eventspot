@@ -48,21 +48,8 @@ public class eventspot {
                     System.out.println("please enter your password:");
                     String password0 = keyboard.nextLine();
 
-                    if (!user1.checkLogin(userName0, password0)) {
+                    if (user1.checkLogin(userName0, password0)) {
 
-                      /*  System.out.println("choose from menu your event type");
-                        System.out.println("1.study area");
-                        System.out.println("2.wedding");
-                        choose = keyboard.nextInt();
-                        switch (choose) {
-                            case 1:
-                                type = "studyArea";
-
-                                break;
-                            case 2:
-                                type = "wedding";
-                       
-                        }*/
                        eventPlace1 place=new eventPlace1(); 
                     } else {
                         repeat = false;
