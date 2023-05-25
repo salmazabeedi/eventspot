@@ -8,7 +8,7 @@ import java.util.Scanner;
  * @author w
  */
 public class userandpass {
-
+//w
     String userName, pass;
       String TitalLine[]=
  {"firstName"," lastName", "phoneNumber", "Email", "city"," userName", "password"," repass"};
