@@ -98,12 +98,12 @@ public user(){
          BufferedWriter wr = new BufferedWriter(fw);
          
          
-        wr.write("\n user information\n ");
-        wr.write("name :  "+firstname + "  " + lastname + "\n");
-        wr.write("userName :  "+username + "\n " +  "password :  "+ password + "\n");
-        wr.write("E-mail :  "+userEmail + "\n");
-        wr.write("phoneNumber : "+phonenumber + "\n");
-        wr.write("city : "+usercity+"\n" +"_____________________________");
+       wr.write('\n'+username+'\n');
+        wr.write(password+'\n');
+        wr.write(firstname + "  " + lastname + "\n");
+        wr.write(userEmail + "\n");
+        wr.write(phonenumber + "\n");
+        wr.write(usercity+"\n");+"_____________________________");
         
             
          wr.close();
