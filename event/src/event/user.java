@@ -12,11 +12,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Scanner;
 
 public class user {
 
-    String firstname, lastname, phonenumber, userEmail, usercity, username, password,repass;
+    String firstname, lastname, phonenumber, userEmail, usercity, username, password,repass,day;
     
 public user(){
     
@@ -98,13 +99,12 @@ public user(){
          BufferedWriter wr = new BufferedWriter(fw);
          
          
-       wr.write('\n'+username+'\n');
-        wr.write(password+'\n');
-        wr.write(firstname + "  " + lastname + "\n");
-        wr.write(userEmail + "\n");
-        wr.write(phonenumber + "\n");
-        wr.write(usercity+"\n");+"_____________________________");
-        
+       // wr.write("\n user information\n ");
+        wr.write(""+firstname + " " + lastname 
+       +" "+username +" "+ password 
+       +" "+userEmail 
+        +" "+phonenumber 
+        +" "+usercity);
             
          wr.close();
          
@@ -114,6 +114,8 @@ public user(){
  }
       }
     }
+    
+    
     public void checkLogin(String email,String pass){
         
         
