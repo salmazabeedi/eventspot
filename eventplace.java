@@ -7,7 +7,7 @@ package event;
 
 import java.awt.Image;
 
-
+//hello 
 public class eventplace {
     String place_location;
     String place_name;
