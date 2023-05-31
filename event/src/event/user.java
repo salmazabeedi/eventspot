@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package event;
+package event20;
 
 import java.io.*;
 import java.io.IOException;
@@ -12,11 +12,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Scanner;
+
+// to lama (:  
+
 
 public class user {
 
-    String firstname, lastname, phonenumber, userEmail, usercity, username, password,repass;
+    String firstname, lastname, phonenumber, userEmail, usercity, username, password,repass,day;
     
 public user(){
     
@@ -98,13 +102,12 @@ public user(){
          BufferedWriter wr = new BufferedWriter(fw);
          
          
-        wr.write("\n user information\n ");
-        wr.write("name :  "+firstname + "  " + lastname + "\n");
-        wr.write("userName :  "+username + "\n " +  "password :  "+ password + "\n");
-        wr.write("E-mail :  "+userEmail + "\n");
-        wr.write("phoneNumber : "+phonenumber + "\n");
-        wr.write("city : "+usercity+"\n" +"_____________________________");
-        
+       // wr.write("\n user information\n ");
+        wr.write(""+firstname + " " + lastname 
+       +" "+username +" "+ password 
+       +" "+userEmail 
+        +" "+phonenumber 
+        +" "+usercity);
             
          wr.close();
          
@@ -114,6 +117,8 @@ public user(){
  }
       }
     }
+    
+    
     public void checkLogin(String email,String pass){
         
         
