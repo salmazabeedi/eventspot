@@ -1,13 +1,14 @@
+
+//package event20;
+
 package event;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import org.json.simple.JSONArray;
-import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -18,9 +19,12 @@ import org.json.simple.parser.ParseException;
  */
 public class eventPlace1 {
 
-    public eventPlace1 ()throws FileNotFoundException, IOException, ParseException {
+    public eventPlace1 (String user)throws FileNotFoundException, IOException, ParseException {
         int choose;
        String type = null;
+       String day,date;
+       int guestnum;
+        String userName=user;
         Scanner keyboard = new Scanner(System.in);
         System.out.println("choose from menu your event type");
         System.out.println("1.study area");
@@ -69,12 +73,23 @@ public class eventPlace1 {
             }
         }
         if (found){
-            System.out.println("your choose is "+choice);
-           // System.out.println("Place Name: " + placeN);
-            System.out.println("Catogery: " + catogery);
-            System.out.println("guest Capacity: " + capacity);
-            System.out.println("Location: " + location);
-            System.out.println("Price: " + price);
+         
+           System.out.println("enter number of  your guest");
+           guestnum=keyboard.nextInt();
+           int c=Integer.parseInt(capacity);
+           if(c<guestnum){
+           System.out.println("Sorry your guest greater than place capacity");
+           
+           }
+           else{ 
+               keyboard.nextLine();
+             System.out.println("What the day?");
+             day=keyboard.nextLine();
+             System.out.println("What the Date?");
+             date=keyboard.nextLine();
+               savaChoice(userName,placeN,catogery,location,guestnum,price,day,date);
+           }
+          
             
             
         }else{
@@ -100,6 +115,32 @@ public class eventPlace1 {
 
         }
 
+    }
+     private  static void savaChoice(String userName,String placeN,String catogery,String location,int capacity,String price,String day,String date){
+        JSONObject user = new JSONObject();
+            user.put("User Name", userName);
+            user.put("Place num", placeN);
+             user.put("Catogery: " , catogery);
+             user.put("guest Capacity: " , capacity);
+            user.put("Location: " , location);
+              user.put("Price: ",  price);
+              user.put("Date: ",  date);
+              user.put("Day: ",  day);
+              JSONArray reslist=new JSONArray();
+              reslist.add(user);
+              JSONObject reserve=new JSONObject();
+              reserve.put("Reservation", reslist);
+            
+            try (FileWriter writer = new FileWriter("UserReservation.json",true)) {
+                writer.write(reserve.toJSONString());
+                System.out.println("your reservation is conformed");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    eventPlace1() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

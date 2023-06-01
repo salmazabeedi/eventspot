@@ -1,17 +1,15 @@
 package event;
 
 
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.io.*;
-import java.util.Scanner;
 
 
 public class placeinfo {
 
-    /**
-     * @param args the command line arguments
-     */
+   
     public static void main(String[] args) throws FileNotFoundException {
 
         @SuppressWarnings("unchecked")
