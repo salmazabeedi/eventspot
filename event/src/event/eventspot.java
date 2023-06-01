@@ -1,13 +1,8 @@
 package event;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
+package event20;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import static java.sql.DriverManager.println;
 import java.util.Scanner;
 import org.json.simple.parser.ParseException;
 /**
@@ -31,7 +26,7 @@ public class eventspot {
         //userandpass user1 = new userandpass();
 
         do {
-            System.out.println("          _Event spot_ ");
+            System.out.println("          __Event spot__ ");
             System.out.println("1-sign in");
             System.out.println("2-create account");
             System.out.println("3-exit");
