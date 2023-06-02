@@ -1,14 +1,16 @@
-
-//package event20;
-
 package event;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import static java.util.Calendar.PM;
 import org.json.simple.JSONArray;
+import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -19,128 +21,136 @@ import org.json.simple.parser.ParseException;
  */
 public class eventPlace1 {
 
-    public eventPlace1 (String user)throws FileNotFoundException, IOException, ParseException {
+    private static Map<Date, Boolean> reservations = new HashMap<>();
+
+    public eventPlace1(String user) throws FileNotFoundException, IOException, ParseException {
+
         int choose;
-       String type = null;
-       String day,date;
-       int guestnum;
-        String userName=user;
+        String type = null;
+        String day, date;
+        int guestnum;
+        String userName = user;
         Scanner keyboard = new Scanner(System.in);
-        System.out.println("choose from menu your event type");
-        System.out.println("1.study area");
-        System.out.println("2.wedding");
-        choose = keyboard.nextInt();
-        switch (choose) {
-            case 1:
-                type = "studyArea";
-
-                break;
-            case 2:
-                type="wedding";
-                
-        }
-
         JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader("places.json")) {
 
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-
-            JSONArray array = (JSONArray) jsonObject.get(type);
-            System.out.println("Please choose from the following:");
-            findplace(array);
-            keyboard.nextLine();
-             String choice = keyboard.nextLine();
-
-        // Check if the user's choice is in the array.
-        boolean found = false;
-       String placeN = null;
-        String price = null;
-        String catogery=null;
-        String location=null;
-        String capacity=null;
-        for (Object o : array) {
-            JSONObject object = (JSONObject) o;
-            if (object.get("place name").equals(choice)) {
-                found = true;
-                 placeN=object.get("place name").toString();
-                 price=object.get("price").toString();
-                 catogery=object.get("catogery").toString();
-                 location=object.get("location").toString();
-                 capacity=object.get("guest capacity").toString();
-                 
-                
-                break;
+        while (true) {
+            System.out.println("Choose from the following event types:");
+            System.out.println("1. Study area");
+            System.out.println("2. Wedding");
+            choose = keyboard.nextInt();
+            switch (choose) {
+                case 1:
+                    type = "studyArea";
+                    break;
+                case 2:
+                    type = "wedding";
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    continue;
             }
-        }
-        if (found){
-         
-           System.out.println("enter number of  your guest");
-           guestnum=keyboard.nextInt();
-           int c=Integer.parseInt(capacity);
-           if(c<guestnum){
-           System.out.println("Sorry your guest greater than place capacity");
-           
-           }
-           else{ 
-               keyboard.nextLine();
-             System.out.println("What the day?");
-             day=keyboard.nextLine();
-             System.out.println("What the Date?");
-             date=keyboard.nextLine();
-               savaChoice(userName,placeN,catogery,location,guestnum,price,day,date);
-           }
-          
-            
-            
-        }else{
-            System.out.println("invalid choose");
-        }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
+            try (FileReader reader = new FileReader("places.json")) {
+                JSONObject jsonObject = (JSONObject) parser.parse(reader);
+                JSONArray array = (JSONArray) jsonObject.get(type);
+                System.out.println("Please choose from the following:");
 
-    private static void findplace(JSONArray array) {
+                // Loop through the places and display their names
+                int placeCount = 1;
+                Map<String, JSONObject> placeMap = new HashMap<>();
+                for (Object o : array) {
+                    JSONObject object = (JSONObject) o;
+                    String placeName = object.get("place name").toString();
+                    System.out.println(placeCount + ". " + placeName + "");
+                    placeMap.put(String.valueOf(placeCount), object);
+                    placeCount++;
+                }
 
-        for (Object o : array) {
-            JSONObject object = (JSONObject) o;
-            System.out.println("Place Name: " + object.get("place name"));
-            System.out.println("Catogery: " + object.get("catogery"));
-            System.out.println("guest Capacity: " + object.get("guest capacity"));
-            System.out.println("Location: " + object.get("location"));
-            System.out.println("Price: " + object.get("price"));
-            System.out.println("_______________________");
+                // Ask the user to choose a place and display its information
+                keyboard.nextLine();
+                String choice = keyboard.nextLine();
+                JSONObject object = placeMap.get(choice);
+                if (object != null) {
+                    String placeN = object.get("place name").toString();
+                    String price = object.get("price").toString();
+                    String category = object.get("catogery").toString();
+                    String location = object.get("location").toString();
+                    String capacity = object.get("guest capacity").toString();
+                    System.out.println("Your choice is " + placeN);
+                    System.out.println("Category: " + category);
+                    System.out.println("Guest Capacity: " + capacity);
+                    System.out.println("Location: " + location);
+                    System.out.println("Price: " + price);
 
-        }
+                    while (true) {
+                        System.out.println("Enter - 'back'-  to go back to the places list or - 'book' - to make a booking:");
+                        String action = keyboard.nextLine();
+                        if (action.equalsIgnoreCase("back")) {
+                            break;
+                        } else if (action.equalsIgnoreCase("book")) {
+                            System.out.println("Enter the number of your guests:");
+                            guestnum = keyboard.nextInt();
+                            int c = Integer.parseInt(capacity);
+                            if (c < guestnum) {
+                                System.out.println("Sorry, your guest countis greater than the place capacity.");
+                            } else {
+                                double newPrice = 0;
 
-    }
-     private  static void savaChoice(String userName,String placeN,String catogery,String location,int capacity,String price,String day,String date){
-        JSONObject user = new JSONObject();
-            user.put("User Name", userName);
-            user.put("Place num", placeN);
-             user.put("Catogery: " , catogery);
-             user.put("guest Capacity: " , capacity);
-            user.put("Location: " , location);
-              user.put("Price: ",  price);
-              user.put("Date: ",  date);
-              user.put("Day: ",  day);
-              JSONArray reslist=new JSONArray();
-              reslist.add(user);
-              JSONObject reserve=new JSONObject();
-              reserve.put("Reservation", reslist);
-            
-            try (FileWriter writer = new FileWriter("UserReservation.json",true)) {
-                writer.write(reserve.toJSONString());
-                System.out.println("your reservation is conformed");
+                                String numberWithoutPerson = price.replace(" per person", "");
+
+                                int hourlyRate = Integer.parseInt(numberWithoutPerson);
+                                newPrice = hourlyRate * guestnum;
+                                System.out.println("price:" + newPrice);
+                                keyboard.nextLine();
+
+                                Scanner scanner = new Scanner(System.in);
+
+                                // Prompt the user to enter the date of reservation
+                                System.out.print("Enter the date of your reservation (dd/mm/yyyy): ");
+                                date = scanner.nextLine();
+                                Date reservationDate = parseDate(date);
+
+                                // Check if the entered date is available
+                                if (!isDateAvailable(reservationDate)) {
+                                    System.out.println("Sorry, this date is not available.");
+                                } else {
+                                    // Add the reservation to the list of reservations
+                                    reservations.put(reservationDate, true);
+                                    System.out.println("Reservation made successfully for " + reservationDate);
+                                }
+
+                                //=======================================================
+                                reservation.saveReservation(userName, placeN, category, location, guestnum, (int) newPrice, price, date);
+                                System.out.println("Booking for " + placeN + " confirmed!");
+                                return;
+                            }
+                        } else {
+                            System.out.println("Invalid choice. Please try again.");
+                        }
+                    }
+                } else {
+                    System.out.println("Invalid choice.");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
     }
 
-    eventPlace1() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private static boolean isDateAvailable(Date date) {
+        // Check if the date is already reserved
+        if (reservations.containsKey(date) && reservations.get(date)) {
+            return false;
+        }
+
+        return true;
     }
 
+    private static Date parseDate(String dateStr) {
+        try {
+            return new SimpleDateFormat("dd/MM/yyyy").parse(dateStr);
+        } catch (java.text.ParseException e) {
+            throw new IllegalArgumentException("Invalid date format. Please use dd/mm/yyyy.");
+        }
+    }
 }

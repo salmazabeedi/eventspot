@@ -1,15 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package event;
-
 
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.io.*;
+import java.util.Scanner;
 
 
 public class placeinfo {
 
-   
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) throws FileNotFoundException {
 
         @SuppressWarnings("unchecked")
@@ -17,7 +24,7 @@ public class placeinfo {
         place1.put("place name", "Ash cafe");
         place1.put("location", "prince sultan");
         place1.put("catogery", "study area");
-        place1.put("price", "150 per hour");
+        place1.put("price", "150 per person");
         place1.put("guest capacity", "30");
 
         //---------
@@ -25,7 +32,7 @@ public class placeinfo {
         place2.put("place name", "subject cafe");
         place2.put("location", "obhour");
         place2.put("catogery", "study area");
-        place2.put("price", "110 per hour");
+        place2.put("price", "110 per person");
         place2.put("guest capacity", "25");
    
         //-------------
@@ -64,14 +71,14 @@ public class placeinfo {
         place7.put("place name", "meraki");
         place7.put("location", "abdulmaqsod khoja");
         place7.put("catogery", "study area");
-        place7.put("price", "100 per hour");
+        place7.put("price", "100 per person");
         place7.put("guest capacity", "30");
      //-------------------
        JSONObject place8 = new JSONObject();
         place8.put("place name", "urth cafe");
         place8.put("location", "king abdilaziz road ");
         place8.put("catogery", "study areapla");
-        place8.put("price", "300 per hour");
+        place8.put("price", "300 per person");
         place8.put("guest capacity", "150");
         
 
