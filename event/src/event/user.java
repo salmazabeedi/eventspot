@@ -10,6 +10,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Scanner;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class user {
 
@@ -27,7 +31,7 @@ public user(){
         this.username = username;
         this.password = password;
         repass=repassword;
-        write_in_file(firstname, lastname, phonenumber, userEmail, usercity, username, password,repassword);
+        saveAccountInfo(firstname, lastname, phonenumber, userEmail, usercity, username, password,repassword);
 
     }
 
@@ -87,33 +91,66 @@ public user(){
         this.usercity = usercity;
     }
 
-    public void write_in_file(String firstname, String lastname, String phonenumber, String userEmail, String usercity, String username, String password,String repassword) throws IOException {
-      {
-          try{
+   public String saveAccountInfo(String firstname, String lastname, String phonenumber, String userEmail, String usercity, String username, String password,String repassword) throws IOException {
+    try{
         File file = new File("user_accounts.txt");
-         FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
-         BufferedWriter wr = new BufferedWriter(fw);
+        FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
+        BufferedWriter wr = new BufferedWriter(fw);
          
-         
-       // wr.write("\n user information\n ");
         wr.write(""+firstname + " " + lastname 
        +" "+username +" "+ password 
        +" "+userEmail 
-        +" "+phonenumber 
-        +" "+usercity);
+       +" "+phonenumber 
+       +" "+usercity);
             
-         wr.close();
-         
-         System.out.println("Account created and saved to file!");
- } catch (IOException e) {
-         System.out.println("Error creating file: " + e.getMessage());
- }
-      }
+        wr.close();
+        return "Account created and saved to file!";
+    } catch (IOException e) {
+        return "Error creating file: " + e.getMessage();
     }
+}
     
     
-    public void checkLogin(String email,String pass){
+  //  public void checkLogin(String email,String pass){
         
         
+   // }
+    
+    public void CardInfo(String cardNum, int amount) throws FileNotFoundException, IOException, ParseException {
+      
+        JSONParser parser = new JSONParser();
+        File file = new File("cards.json");
+        FileReader reader = new FileReader(file);
+        JSONObject jsonObject = (JSONObject) parser.parse(reader);
+
+        JSONArray array = (JSONArray) jsonObject.get("cards");
+        JSONObject user = new JSONObject();
+        user.put("card_number", cardNum);
+        user.put("amount", amount);
+
+        array.add(user);
+
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(jsonObject.toJSONString());
+
+        }
+
     }
+    public boolean checkLogin(String userName, String password) throws IOException {
+    // Open the file for reading using FileReader and BufferedReader
+    boolean flag = false;
+    Scanner input = new Scanner(new FileInputStream("user_accounts.txt"));
+
+    while (input.hasNextLine()) {
+        String line = input.nextLine();//reading line by line
+        if (line.contains(userName) && line.contains(password)) {
+            flag = true;
+            break;
+        }
+    }
+
+    input.close();
+    return flag;
+}
+    
 }
